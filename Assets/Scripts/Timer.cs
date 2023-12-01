@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     [SerializeField] public TextMeshProUGUI gameTimer;
     [SerializeField] public TextMeshProUGUI pauseTimer;
     
-    [SerializeField] private int _msElapsed;
+    [SerializeField] private float _sElapsed;
     [SerializeField] private bool stopTimer = true;
     
     private bool displayGameTimer;
@@ -26,6 +26,14 @@ public class Timer : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
         StartCoroutine(Clock());
+    }
+    
+    void Update()
+    {
+        if (!stopTimer)
+        {
+            _sElapsed += Time.deltaTime;
+        }
     }
 
     public void HideGameTimer()
@@ -60,19 +68,19 @@ public class Timer : MonoBehaviour
     public void Restart()
     {
         stopTimer = true;
-        _msElapsed = 0;
+        _sElapsed = 0;
         gameTimer.text = "00:00:00";
         pauseTimer.text = "00:00:00";
     }
 
-    public int getMsElapsed()
+    public float getMsElapsed()
     {
-        return _msElapsed;
+        return _sElapsed;
     }
 
     public string getMsElapsedAsText()
     {
-        return msToText(_msElapsed);
+        return sToText(_sElapsed);
     }
 
     IEnumerator Clock()
@@ -82,19 +90,18 @@ public class Timer : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
             if (!stopTimer)
             {
-                _msElapsed++;
-                gameTimer.text = msToText(_msElapsed);
-                pauseTimer.text = msToText(_msElapsed);
+                gameTimer.text = sToText(_sElapsed);
+                pauseTimer.text = sToText(_sElapsed);
             }
         }
     }
 
-    public static string msToText(int ms)
+    public static string sToText(float seconds)
     {
-        int msDisplay = ms % 100;
-        int seconds = ms / 100;
-        int secondsDisplay = seconds % 60;
-        int minutesDisplay = seconds / 60;
-        return String.Format("{0:00}:{1:00}:{2:00}", minutesDisplay, secondsDisplay, msDisplay);
+        float ms = seconds * 100;
+        float msDisplay = ms % 100;
+        float secondsDisplay = seconds % 60;
+        float minutesDisplay = Mathf.FloorToInt(seconds / 60);
+        return String.Format("{0:00}:{1:00}:{2:00}", minutesDisplay, secondsDisplay, Mathf.Clamp(msDisplay, 0, 99));
     }
 }

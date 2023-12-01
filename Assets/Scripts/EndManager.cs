@@ -57,14 +57,14 @@ public class EndManager : MonoBehaviour
         }
     }
     
-    IEnumerator PostScore(string name, int score)
+    IEnumerator PostScore(string name, float score)
     {
         SHA256 sha = SHA256.Create();
         PlayerScore playerScore = new PlayerScore();
         playerScore.uuid = Guid.NewGuid().ToString();
         playerScore.name = name;
-        playerScore.score = score;
-        playerScore.hash = HashString(name + score);
+        playerScore.SetScoreInSeconds(score);
+        playerScore.hash = HashString(playerScore.name + playerScore.score);
         using (UnityWebRequest webRequest = UnityWebRequest.Post(leaderboard.apiRoute+"/up", JsonUtility.ToJson(playerScore),  "application/json"))
         {
             yield return webRequest.SendWebRequest();
@@ -81,7 +81,7 @@ public class EndManager : MonoBehaviour
             int playerScoreIndex = playerScore.position - 1;
             if (_scoreGameObjects.ElementAtOrDefault(playerScoreIndex))
             {
-                _scoreGameObjects[playerScoreIndex].SetScore(Timer.msToText(playerScore.score));
+                _scoreGameObjects[playerScoreIndex].SetScore(Timer.sToText(playerScore.GetScoreInSeconds()));
                 _scoreGameObjects[playerScoreIndex].SetCreatedAt(playerScore.createdAt);
                 _scoreGameObjects[playerScoreIndex].SetName(playerScore.name);
                 _scoreGameObjects[playerScoreIndex].SetPosition(playerScore.position.ToString());
@@ -90,7 +90,7 @@ public class EndManager : MonoBehaviour
             }
             else
             {
-                playerScoreDisplay.SetScore(Timer.msToText(playerScore.score));
+                playerScoreDisplay.SetScore(Timer.sToText(playerScore.GetScoreInSeconds()));
                 playerScoreDisplay.SetCreatedAt(playerScore.createdAt);
                 playerScoreDisplay.SetName(playerScore.name);
                 playerScoreDisplay.SetPosition(playerScore.position.ToString());

@@ -21,13 +21,19 @@ public class GameManager : MonoBehaviour
             _timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<Timer>();
         }
 
-        float musicVolume;
-        audioMixer.GetFloat("MusicVolume", out musicVolume);   
-        musicSlider.value = Mathf.Pow(2,musicVolume / 20f) ;
+        if (musicSlider)
+        {
+            float musicVolume;
+            audioMixer.GetFloat("MusicVolume", out musicVolume);   
+            musicSlider.value = Mathf.Pow(2,musicVolume / 20f) ;
+        }
 
-        float effectVolume;
-        audioMixer.GetFloat("EffectVolume", out effectVolume);
-        effectSlider.value = Mathf.Pow(2,effectVolume / 20f) ;
+        if (effectSlider)
+        {
+            float effectVolume;
+            audioMixer.GetFloat("EffectVolume", out effectVolume);
+            effectSlider.value = Mathf.Pow(2,effectVolume / 20f) ;
+        }
     }
 
     public void Pause()

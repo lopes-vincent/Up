@@ -162,6 +162,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3845eb4b-2f90-4473-b554-c12d884574bd",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c9ab0c93-0e0f-4826-bedd-8ccb73988a7e",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -252,6 +263,17 @@
                     "name": "",
                     "id": "df2edfa2-c461-498d-a998-32afacc26d61",
                     "path": "<Keyboard>/numpad0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d7b42b0-9839-41b8-999c-e87b23775cef",
+                    "path": "<Keyboard>/rightShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

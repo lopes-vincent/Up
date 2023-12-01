@@ -40,7 +40,7 @@ public class Leaderboard : MonoBehaviour
             {
                 if (_scoreGameObjects.ElementAtOrDefault(index))
                 {
-                    _scoreGameObjects[index].SetScore(Timer.msToText(playerScore.score));
+                    _scoreGameObjects[index].SetScore(Timer.sToText(playerScore.GetScoreInSeconds()));
                     _scoreGameObjects[index].SetCreatedAt(playerScore.createdAt);
                     _scoreGameObjects[index].SetName(playerScore.name);
                     _scoreGameObjects[index].SetPosition((index + 1).ToString());
@@ -68,5 +68,15 @@ public class PlayerScore
     public string hash;
     public int position;
     public string createdAt;
+
+    public float GetScoreInSeconds()
+    {
+        return (float)score / 100;
+    }
+
+    public void SetScoreInSeconds(float seconds)
+    {
+        score = Mathf.CeilToInt(seconds * 100f);
+    }
 }
 
